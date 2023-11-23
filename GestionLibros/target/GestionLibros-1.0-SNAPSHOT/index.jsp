@@ -13,7 +13,7 @@
   <li><a href="agregarLibro.jsp">Agregar Libro</a></li>
   <li><a href="buscarLibro.jsp">Buscar Libros</a></li>
   <li><a href="eliminarLibro.jsp">Eliminar Libro</a></li>
+  <li><a href="mostarTodosLosLibros.jsp">Mostrar Todos los Libros</a></li>
 </ul>
 </body>
 </html>
-

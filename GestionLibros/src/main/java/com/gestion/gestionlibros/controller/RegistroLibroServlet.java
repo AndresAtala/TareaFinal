@@ -14,7 +14,7 @@ import org.jooq.DSLContext;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "registroLibroServlet", value = "/registroLibro")
+@WebServlet(name = "registroLibroServlet", value = "/registroLibroServlet")
 public class RegistroLibroServlet extends HttpServlet {
 
     @Override

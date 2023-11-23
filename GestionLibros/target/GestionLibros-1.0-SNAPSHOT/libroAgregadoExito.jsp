@@ -11,6 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-
+<h1>Libro Agregado Con Exito</h1>
+<ul>
+    <li><a href="index.jsp">INICIO</a></li>
+</ul>
 </body>
 </html>

@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Registro Erroneo</h1>
 <ul>
     <li><a href="index.jsp">INICIO</a></li>
 </ul>

@@ -17,14 +17,14 @@ import java.util.List;
 @WebServlet(name = "agregarCategoriasServlet", value = "/AgregarCategoriasServlet")
 public class AgregarCategoriasServlet extends HttpServlet {
 
-    @Override
+   /* @Override
     public void init() throws ServletException {
         try {
             DBGenerator.iniciarBD("LibrosBD");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

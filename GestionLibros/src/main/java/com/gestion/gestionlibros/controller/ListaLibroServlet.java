@@ -19,33 +19,49 @@ import java.util.List;
 public class ListaLibroServlet extends HttpServlet {
 
     @Override
-    public void init() throws ServletException {
-        try {
-            DBGenerator.iniciarBD("LibrosBD");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            List<Libro> libros = obtenerLibros();
-            List<String> categorias = obtenerCategorias();
+        String action = req.getParameter("action");
 
-            req.setAttribute("libros", libros);
-            req.getSession().setAttribute("categorias", categorias);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if ("buscar".equals(action)) {
+            try {
+                String criterio = req.getParameter("criterio");
+                String valorBusqueda = req.getParameter("valorBusqueda");
+
+                List<Libro> libros = buscarLibros(criterio, valorBusqueda);
+                List<String> categorias = obtenerCategorias();
+
+                req.setAttribute("libros", libros);
+                req.getSession().setAttribute("categorias", categorias);
+
+                RequestDispatcher respuesta = req.getRequestDispatcher("/mostrarLibros.jsp");
+                respuesta.forward(req, resp);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else if ("mostrarTodos".equals(action)) {
+            resp.sendRedirect("mostrarTodosLibros");
+
+        } else {
+            resp.sendRedirect("index.jsp");
         }
-
-        RequestDispatcher respuesta = req.getRequestDispatcher("/mostrarLibros.jsp");
-        respuesta.forward(req, resp);
     }
 
-    private List<Libro> obtenerLibros() throws ClassNotFoundException {
+    private List<Libro> buscarLibros(String criterio, String valorBusqueda) throws ClassNotFoundException {
         DSLContext query = DBGenerator.conectarBD("LibrosBD");
         LibroDAO libroDAO = new LibroDAO();
-        return libroDAO.obtenerLibros(query, "nombre", null);
+
+        switch (criterio) {
+            case "nombre":
+                return libroDAO.obtenerLibros(query, "nombre", valorBusqueda);
+            case "categoria":
+                return libroDAO.obtenerLibros(query, "categoria", valorBusqueda);
+            case "ano":
+                int ano = Integer.parseInt(valorBusqueda);
+                return libroDAO.obtenerLibros(query, "ano", ano);
+            default:
+                return new ArrayList<>();
+        }
     }
 
     private List<String> obtenerCategorias() throws ClassNotFoundException {

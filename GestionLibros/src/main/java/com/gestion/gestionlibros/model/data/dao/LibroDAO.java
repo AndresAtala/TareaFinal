@@ -54,11 +54,16 @@ public class LibroDAO {
         for (org.jooq.Record record : resultados) {
             String nombre = record.get(NOMBRE_FIELD, String.class);
             String categoria = record.get(CATEGORIA_FIELD, String.class);
-            int ano = record.get(ANO_FIELD, Integer.class);
-            libros.add(new Libro(nombre, categoria, ano));
+
+            // Verifica si el valor de ANO_FIELD es nulo antes de invocar intValue()
+            Integer ano = record.get(ANO_FIELD, Integer.class);
+            int anoValue = (ano != null) ? ano.intValue() : 0;
+
+            libros.add(new Libro(nombre, categoria, anoValue));
         }
         return libros;
     }
+
     public void agregarCategoria(DSLContext query, String nuevaCategoria) {
         // Puedes asignar un nombre específico para la nueva categoría
         String nombreCategoria = "Categoria" + nuevaCategoria;
@@ -68,4 +73,12 @@ public class LibroDAO {
                 .values(nombreCategoria, nuevaCategoria)
                 .execute();
     }
+    public List<Libro> obtenerTodosLosLibros(DSLContext query) {
+        Result<org.jooq.Record> resultados = query.select()
+                .from(LIBRO_TABLE)
+                .fetch();
+
+        return obtenerListaLibros(resultados);
+    }
+
 }

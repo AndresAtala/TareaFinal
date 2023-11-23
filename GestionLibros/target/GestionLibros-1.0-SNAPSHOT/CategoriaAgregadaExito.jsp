@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Categoria AGregada Con Exito</h1>
 <ul>
     <li><a href="index.jsp">INICIO</a></li>
 </ul>
